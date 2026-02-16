@@ -83,10 +83,9 @@ const Header: React.FC<HeaderProps> = ({ showDashboardNav = false }) => {
             </div>
 
             <div className="text-2xl font-bold bg-gradient-to-br from-blue-600 to-blue-800  bg-clip-text text-transparent">
-              MediCare+
+              Curovia
             </div>
           </Link>
-
           {isAuthenticated && showDashboardNav && (
             <nav className="hidden md:flex items-center space-x-6">
               {getDashboardNavigation().map((item) => (
@@ -106,7 +105,6 @@ const Header: React.FC<HeaderProps> = ({ showDashboardNav = false }) => {
             </nav>
           )}
         </div>
-
         {isAuthenticated && showDashboardNav ? (
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" className="relative">
@@ -115,7 +113,6 @@ const Header: React.FC<HeaderProps> = ({ showDashboardNav = false }) => {
                 4
               </Badge>
             </Button>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -153,7 +150,6 @@ const Header: React.FC<HeaderProps> = ({ showDashboardNav = false }) => {
                         {user?.name?.charAt(0)?.toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-
                     <div className="flex-1 min-w-0">
                       <p className=" font-medium truncate">{user?.name}</p>
                       <p className="text-sm text-gray-500 truncate max-w-[140px]">
@@ -205,7 +201,6 @@ const Header: React.FC<HeaderProps> = ({ showDashboardNav = false }) => {
                     Log in
                   </Button>
                 </Link>
-
                 <Link href="/signup/patient" className="hidden md:block">
                   <Button className="bg-gradient-to-r from-blue-600 to-blue-700  font-medium hover:from-blue-700 hover:to-blue-800 rounded-full px-6">
                     Book Consultation
