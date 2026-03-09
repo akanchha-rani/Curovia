@@ -10,7 +10,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
@@ -20,5 +19,7 @@
     "mongoose": "^9.1.6",
     "morgan": "^1.10.1",
     "nodemon": "^3.1.11"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
