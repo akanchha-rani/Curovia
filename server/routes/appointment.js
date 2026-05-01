@@ -6,7 +6,6 @@ const validate = require("../middleware/validate");
 
 const router = express.Router();
 
-//Doctor's appointment
 router.get(
   "/doctor",
   authenticate,
@@ -43,7 +42,6 @@ router.get(
   }
 );
 
-//patient appointmnet
 router.get(
   "/patient",
   authenticate,
@@ -82,7 +80,6 @@ router.get(
   }
 );
 
-//Get booked slot for doctor on specific date
 router.get("/booked-slots/:doctorId/:date", async (req, res) => {
   try {
     const { doctorId, date } = req.params;
@@ -153,7 +150,6 @@ router.post("/book", authenticate, requireRole("patient"), [
         return res.forbidden("This time slot is alredy booked");
       }
 
-      //Generate unique roomId
       const zegoRoomId = `room_${Date.now()}_${Math.random()
         .toString(36)
         .substr(2, 9)}`;
@@ -191,7 +187,6 @@ router.post("/book", authenticate, requireRole("patient"), [
   },
 ]);
 
-//Join
 router.get("/join/:id", authenticate, async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id)
@@ -215,7 +210,6 @@ router.get("/join/:id", authenticate, async (req, res) => {
   }
 });
 
-//End
 router.put("/end/:id", authenticate, async (req, res) => {
   try {
     const { prescription, notes } = req.body;
@@ -241,7 +235,6 @@ router.put("/end/:id", authenticate, async (req, res) => {
   }
 });
 
-//update appointment status by doctor
 router.put(
   "/status/:id",
   authenticate,
@@ -273,7 +266,6 @@ router.put(
   }
 );
 
-//Get single appointment by id
 
 router.get("/:id", authenticate, async (req, res) => {
   try {
@@ -288,7 +280,6 @@ router.get("/:id", authenticate, async (req, res) => {
       return res.notFound("Appointment not found");
     }
 
-    //check if user has access to this appointment
     const userRole = req.auth.type;
     if (
       userRole === "doctor" &&

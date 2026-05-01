@@ -6,6 +6,4 @@ const computeAgeFromDob = dob => {
     return Math.abs(ageDate.getUTCFullYear()- 1970)
 }
 
-
-
 module.exports = {computeAgeFromDob}
