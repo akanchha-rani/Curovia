@@ -9,7 +9,6 @@ const passport = require('passport');
 
 const router = express.Router();
 
-
 const signToken = (id,type) => 
     jwt.sign({id,type}, process.env.JWT_SECRET, {expiresIn: '7d'});
 
@@ -100,10 +99,6 @@ router.post('/doctor/register',
  )
 
 
-
- //Google Outh Start form here
-
-
  router.get('/google', (req,res,next) => {
     const userType = req.query.type || 'patient';
 
@@ -127,8 +122,6 @@ router.post('/doctor/register',
              const {user,type} = req.user;
              const token = signToken(user._id,type);
 
-
-             //Redirect to frontend with token
              const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
              const redirectUrl = `${frontendUrl}/auth/success?token=${token}&type=${type}&user=${encodeURIComponent(JSON.stringify({
                 id: user._id,
@@ -144,8 +137,6 @@ router.post('/doctor/register',
     }
  )
 
-
- //Auth failure
  router.get('/failure', (req,res) => res.badRequest('Google authentication Failed'))
 
 
