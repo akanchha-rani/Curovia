@@ -88,13 +88,11 @@ router.get(
   }
 );
 
-//Get the profile of doctor
 router.get("/me", authenticate, requireRole("doctor"), async (req, res) => {
   const doc = await Doctor.findById(req.user._id).select("-password -googleId");
   res.ok(doc, "Profile fetched");
 });
 
-//update doctor profile
 router.put(
   "/onboarding/update",
   authenticate,
@@ -132,7 +130,6 @@ router.put(
   }
 );
 
-//doctor dashboard
 router.get(
   "/dashboard",
   authenticate,
@@ -142,7 +139,6 @@ router.get(
       const doctorId = req.auth.id;
       const now = new Date();
 
-      //Proper date range calculation
       const startOfDay = new Date(
         now.getFullYear(),
         now.getMonth(),
@@ -170,7 +166,6 @@ router.get(
         return res.notFound("Doctor not found");
       }
 
-      //Today's appointment with full population
       const todayAppointments = await Appointment.find({
         doctorId,
         slotStartIso: { $gte: startOfDay, $lte: endOfDay },
@@ -180,7 +175,6 @@ router.get(
         .populate("doctorId", "name fees profileImage specialization")
         .sort({ slotStartIso: 1 });
 
-      //upcoming appointment with full population
       const upcomingAppointments = await Appointment.find({
         doctorId,
         slotStartIso: { $gt: endOfDay },
