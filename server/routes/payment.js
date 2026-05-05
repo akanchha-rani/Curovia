@@ -27,7 +27,6 @@ router.post(
     try {
       const { appointmentId } = req.body;
 
-      //find appointment
       const appointment = await Appointment.findById(appointmentId)
         .populate("doctorId", "name specialization")
         .populate("patientId", "name email phone");
@@ -101,7 +100,6 @@ router.post(
         razorpay_signature,
       } = req.body;
 
-      //find appointment
       const appointment = await Appointment.findById(appointmentId)
         .populate("doctorId", "name specialization")
         .populate("patientId", "name email phone");
@@ -113,7 +111,6 @@ router.post(
         return res.forbidden("Access denined");
       }
 
-      //verify paymnet signature
       const body = razorpay_order_id + "|" + razorpay_payment_id;
       const expectedSignature = crypto
         .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
