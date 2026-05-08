@@ -65,9 +65,8 @@ passport.use(
       } catch (error) {
         return done(error);
       }
-    }
-  )
+    },
+  ),
 );
-
 
 module.exports = passport;
