@@ -47,15 +47,13 @@ interface AppointmentState {
   loading: boolean;
   error: string | null;
 
-  //Actions
   clearError: () => void;
   setCurrentAppointment: (appointment: Appointment) => void;
 
-  //Api Actions
   fetchAppointments: (
     role: "doctor" | "patient",
     tab?: string,
-    filters?: AppointmentFilters
+    filters?: AppointmentFilters,
   ) => Promise<void>;
   fetchBookedSlots: (doctorId: string, date: string) => Promise<void>;
   fetchAppointmentById: (appointmentId: string) => Promise<Appointment | null>;
@@ -64,11 +62,11 @@ interface AppointmentState {
   endConsultation: (
     appointmentId: string,
     prescription?: string,
-    notes?: string
+    notes?: string,
   ) => Promise<void>;
   updateAppointmentStatus: (
     appointmentId: string,
-    status: string
+    status: string,
   ) => Promise<void>;
 }
 
@@ -113,7 +111,7 @@ export const useAppointmentStore = create<AppointmentState>((set, get) => ({
         }
       });
       const response = await getWithAuth(
-        `${endPoint}?${queryParams.toString()}`
+        `${endPoint}?${queryParams.toString()}`,
       );
       set({ appointments: response.data || [] });
     } catch (error: any) {
@@ -140,7 +138,7 @@ export const useAppointmentStore = create<AppointmentState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await getWithAuth(
-        `/appointment/booked-slots/${doctorId}/${date}`
+        `/appointment/booked-slots/${doctorId}/${date}`,
       );
       set({ bookedSlots: response?.data });
     } catch (error: any) {
@@ -173,7 +171,7 @@ export const useAppointmentStore = create<AppointmentState>((set, get) => ({
         appointments: state.appointments.map((apt) =>
           apt._id === appointmentId
             ? { ...apt, staus: "In Progress" as const }
-            : apt
+            : apt,
         ),
         currentAppointment:
           state.currentAppointment?._id === appointmentId
@@ -199,7 +197,7 @@ export const useAppointmentStore = create<AppointmentState>((set, get) => ({
         appointments: state.appointments.map((apt) =>
           apt._id === appointmentId
             ? { ...apt, staus: "Completed" as const }
-            : apt
+            : apt,
         ),
         currentAppointment:
           state.currentAppointment?._id === appointmentId
@@ -215,18 +213,19 @@ export const useAppointmentStore = create<AppointmentState>((set, get) => ({
     }
   },
   updateAppointmentStatus: async (appointmentId, status) => {
-     set({ loading: true, error: null });
+    set({ loading: true, error: null });
     try {
-      const response = await putWithAuth(`/appointment/status/${appointmentId}`, {status});
+      const response = await putWithAuth(
+        `/appointment/status/${appointmentId}`,
+        { status },
+      );
       set((state) => ({
         appointments: state.appointments.map((apt) =>
-          apt._id === appointmentId
-            ? { ...apt, staus: status as any }
-            : apt
+          apt._id === appointmentId ? { ...apt, staus: status as any } : apt,
         ),
         currentAppointment:
           state.currentAppointment?._id === appointmentId
-            ? { ...state.currentAppointment, status: status as any}
+            ? { ...state.currentAppointment, status: status as any }
             : state.currentAppointment,
       }));
 
