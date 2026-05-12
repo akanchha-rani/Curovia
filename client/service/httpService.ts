@@ -32,72 +32,83 @@ class HttpService {
     method: string,
     body?: any,
     auth: boolean = true,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T>> {
     try {
-        const url = `${BASE_URL}${endPoint}`;
-        const headers = {
-            ...this.getHeaders(auth),
-            ...options?.headers
-        }
+      const url = `${BASE_URL}${endPoint}`;
+      const headers = {
+        ...this.getHeaders(auth),
+        ...options?.headers,
+      };
 
-        const config : RequestInit= {
-            method,
-            headers,
-            ...(body && {body: JSON.stringify(body)})
-        }
+      const config: RequestInit = {
+        method,
+        headers,
+        ...(body && { body: JSON.stringify(body) }),
+      };
 
-        const response = await fetch(url, config);
-        const data : ApiResponse <T> = await response.json();
-        if(!response.ok) {
-        throw new Error(data.message || `HTTP ${response.status}: ${response.statusText}`)
-        }
-        return data;
-    } catch (error:any) {
-        console.error(`Api Error [${method} ${endPoint} ]:`, error)
-        console.log(error)
-        throw error;
+      const response = await fetch(url, config);
+      const data: ApiResponse<T> = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          data.message || `HTTP ${response.status}: ${response.statusText}`,
+        );
+      }
+      return data;
+    } catch (error: any) {
+      console.error(`Api Error [${method} ${endPoint} ]:`, error);
+      console.log(error);
+      throw error;
     }
   }
 
-  //Method with authentication
-  async getWithAuth<T = any > (endPoint:string,options?:RequestOptions): Promise<ApiResponse<T>> {
-    return this.makeRequest<T>(endPoint,'GET',null, true, options)
+  async getWithAuth<T = any>(
+    endPoint: string,
+    options?: RequestOptions,
+  ): Promise<ApiResponse<T>> {
+    return this.makeRequest<T>(endPoint, "GET", null, true, options);
   }
 
-
-    async postWithAuth<T = any > (endPoint:string,body:any,options?:RequestOptions): Promise<ApiResponse<T>> {
-    return this.makeRequest<T>(endPoint,'POST',body, true, options)
+  async postWithAuth<T = any>(
+    endPoint: string,
+    body: any,
+    options?: RequestOptions,
+  ): Promise<ApiResponse<T>> {
+    return this.makeRequest<T>(endPoint, "POST", body, true, options);
   }
 
-      async putWithAuth<T = any > (endPoint:string,body:any,options?:RequestOptions): Promise<ApiResponse<T>> {
-    return this.makeRequest<T>(endPoint,'PUT',body, true, options)
+  async putWithAuth<T = any>(
+    endPoint: string,
+    body: any,
+    options?: RequestOptions,
+  ): Promise<ApiResponse<T>> {
+    return this.makeRequest<T>(endPoint, "PUT", body, true, options);
   }
 
-    async deleteWithAuth<T = any > (endPoint:string,options?:RequestOptions): Promise<ApiResponse<T>> {
-    return this.makeRequest<T>(endPoint,'DELETE',null, true, options)
+  async deleteWithAuth<T = any>(
+    endPoint: string,
+    options?: RequestOptions,
+  ): Promise<ApiResponse<T>> {
+    return this.makeRequest<T>(endPoint, "DELETE", null, true, options);
   }
 
-
-      async postWithoutAuth<T = any > (endPoint:string,body:any,options?:RequestOptions): Promise<ApiResponse<T>> {
-    return this.makeRequest<T>(endPoint,'POST',body, false, options)
+  async postWithoutAuth<T = any>(
+    endPoint: string,
+    body: any,
+    options?: RequestOptions,
+  ): Promise<ApiResponse<T>> {
+    return this.makeRequest<T>(endPoint, "POST", body, false, options);
   }
 
-        async getWithoutAuth<T = any > (endPoint:string,options?:RequestOptions): Promise<ApiResponse<T>> {
-    return this.makeRequest<T>(endPoint,'GET',null, false, options)
+  async getWithoutAuth<T = any>(
+    endPoint: string,
+    options?: RequestOptions,
+  ): Promise<ApiResponse<T>> {
+    return this.makeRequest<T>(endPoint, "GET", null, false, options);
   }
 }
 
-
-
-
-
-//Export the singleton instance
 export const httpService = new HttpService();
-
-
-
-//bind create a new function where this is permanently set to the instance of HttpService
 
 export const getWithAuth = httpService.getWithAuth.bind(httpService);
 export const postWithAuth = httpService.postWithAuth.bind(httpService);
