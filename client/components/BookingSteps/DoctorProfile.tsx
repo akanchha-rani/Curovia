@@ -105,7 +105,7 @@ const DoctorProfile = ({ doctor }: DoctorPrfileInterface) => {
               </p>
             </div>
             <div className="text-green-600">
-                <Heart className="w-8 h-8"/>
+              <Heart className="w-8 h-8" />
             </div>
           </div>
         </div>

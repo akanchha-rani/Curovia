@@ -92,7 +92,7 @@ const ConsultationStep = ({
                     </div>
                   </div>
                 );
-              }
+              },
             )}
           </div>
         </div>

@@ -3,7 +3,13 @@ import { userAuthStore } from "@/store/authStore";
 import React, { useEffect, useRef, useState } from "react";
 import { Separator } from "../ui/separator";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle, CreditCard, Loader2, Shield, XCircle } from "lucide-react";
+import {
+  CheckCircle,
+  CreditCard,
+  Loader2,
+  Shield,
+  XCircle,
+} from "lucide-react";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
 
@@ -51,10 +57,9 @@ const PayementStep = ({
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
   const platformFees = Math.round(consultationFee * 0.1);
   const totalAmount = consultationFee + platformFees;
-  const [shouldAutoOpen,setShouldAutoOpen] = useState(true)
-  const modelCloseCountRef = useRef<number>(0)
+  const [shouldAutoOpen, setShouldAutoOpen] = useState(true);
+  const modelCloseCountRef = useRef<number>(0);
 
-  //Load Razorpay script and auto-trigger payment
   useEffect(() => {
     if (appointmentId && patientName && !window.Razorpay) {
       const script = document.createElement("script");
@@ -65,16 +70,25 @@ const PayementStep = ({
   }, [appointmentId, patientName]);
 
   useEffect(() => {
-    if(appointmentId && patientName && paymentStatus === 'idle' && !isPaymentLoading && shouldAutoOpen){
-      const timer =setTimeout(() => {
+    if (
+      appointmentId &&
+      patientName &&
+      paymentStatus === "idle" &&
+      !isPaymentLoading &&
+      shouldAutoOpen
+    ) {
+      const timer = setTimeout(() => {
         handlePayment();
-      },500);
-      return () => clearTimeout(timer)
+      }, 500);
+      return () => clearTimeout(timer);
     }
-  },[appointmentId,patientName,paymentStatus,isPaymentLoading,shouldAutoOpen])
-
-  
-
+  }, [
+    appointmentId,
+    patientName,
+    paymentStatus,
+    isPaymentLoading,
+    shouldAutoOpen,
+  ]);
 
   const handlePayment = async () => {
     if (!appointmentId || !patientName) {
@@ -87,21 +101,19 @@ const PayementStep = ({
       setError("");
       setPaymentStatus("processing");
 
-      //create paymnet order
       const orderResponse = await httpService.postWithAuth(
         "/payment/create-order",
-        { appointmentId }
+        { appointmentId },
       );
 
       if (!orderResponse.success) {
         throw new Error(
-          orderResponse.message || "Failed to create payment order"
+          orderResponse.message || "Failed to create payment order",
         );
       }
 
       const { orderId, amount, currency, key } = orderResponse.data;
 
-      //Configure Razorpay options
       const options = {
         key: key,
         amount: amount * 100,
@@ -118,7 +130,7 @@ const PayementStep = ({
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
-              }
+              },
             );
             if (verifyResponse.success) {
               setPaymentStatus("success");
@@ -129,7 +141,7 @@ const PayementStep = ({
               }
             } else {
               throw new Error(
-                verifyResponse.message || "Paymnet verificatio failed"
+                verifyResponse.message || "Paymnet verificatio failed",
               );
             }
           } catch (error: any) {
@@ -155,14 +167,14 @@ const PayementStep = ({
           ondismiss: () => {
             setPaymentStatus("idle");
             setError("");
-            modelCloseCountRef.current +=1;
+            modelCloseCountRef.current += 1;
 
-            if(modelCloseCountRef.current === 1){
+            if (modelCloseCountRef.current === 1) {
               setTimeout(() => {
                 handlePayment();
-              },1000)
-            }else{
-              setShouldAutoOpen(false)
+              }, 1000);
+            } else {
+              setShouldAutoOpen(false);
             }
           },
         },
@@ -181,7 +193,7 @@ const PayementStep = ({
 
   const handlePaynow = () => {
     if (appointmentId && patientName) {
-      modelCloseCountRef.current =0;
+      modelCloseCountRef.current = 0;
       handlePayment();
     } else {
       onConfirm();
@@ -339,9 +351,7 @@ const PayementStep = ({
             ) : appointmentId && patientName ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                <span className="text-sm md:text-lg">
-                  Opening Payment...
-                </span>
+                <span className="text-sm md:text-lg">Opening Payment...</span>
               </>
             ) : (
               <>

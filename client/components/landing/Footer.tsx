@@ -16,7 +16,7 @@ const Footer = () => {
                   <Stethoscope className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-3xl font-bold bg-gradient-to-br from-white to-blue-100  bg-clip-text text-transparent">
-                  MediCare+
+                  Curovia
                 </div>
               </div>
 

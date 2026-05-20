@@ -126,9 +126,9 @@ export const testimonials = [
 
 export const faqs = [
   {
-    question: "How much does a doctor visit with MediCare+ cost?",
+    question: "How much does a doctor visit with Curovia cost?",
     answer:
-      "With insurance, you pay your copay based on your plan. We accept most plans, including Medicare. Without insurance, online doctor visits are $129. You can become a MediCare+ member and pay $44/visit. Membership is $55 for three months and $180 for a yearly membership.",
+      "With insurance, you pay your copay based on your plan. We accept most plans, including Medicare. Without insurance, online doctor visits are $129. You can become a Curovia member and pay $44/visit. Membership is $55 for three months and $180 for a yearly membership.",
   },
   {
     question: "Do you accept health insurance?",
@@ -136,7 +136,7 @@ export const faqs = [
       "Yes, we accept most major health insurance plans including Medicare, BlueCross BlueShield, Aetna, United Healthcare, Cigna, Humana, and many others. We also accept FSA and HSA payments.",
   },
   {
-    question: "What conditions can MediCare+ doctors treat?",
+    question: "What conditions can Curovia doctors treat?",
     answer:
       "Our doctors can treat a wide range of conditions including cold and flu symptoms, allergies, skin conditions, mental health concerns, chronic condition management, and much more through virtual consultations.",
   },
