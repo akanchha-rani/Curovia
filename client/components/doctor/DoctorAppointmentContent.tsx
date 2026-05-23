@@ -6,7 +6,17 @@ import { Appointment, useAppointmentStore } from "@/store/appointmentStore";
 import { Card, CardContent } from "../ui/card";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Calendar, Clock, FileText, MapPin, Phone, Star, Stethoscope, Video, XCircle } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  FileText,
+  MapPin,
+  Phone,
+  Star,
+  Stethoscope,
+  Video,
+  XCircle,
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
@@ -15,7 +25,8 @@ import PrescriptionViewModal from "./PrescriptionViewModal";
 
 const DoctorAppointmentContent = () => {
   const { user } = userAuthStore();
-  const { appointments, fetchAppointments, loading ,updateAppointmentStatus} = useAppointmentStore();
+  const { appointments, fetchAppointments, loading, updateAppointmentStatus } =
+    useAppointmentStore();
   const [activeTab, setActiveTab] = useState("upcoming");
   const [tabCounts, setTabCounts] = useState({
     upcoming: 0,
@@ -28,10 +39,8 @@ const DoctorAppointmentContent = () => {
     }
   }, [user, activeTab, fetchAppointments]);
 
-  //update tab counts whever appointmnet chnage
   useEffect(() => {
     const now = new Date();
-    //filter the upcoming appointmnet
     const upcomingAppointments = appointments.filter((apt) => {
       const aptDate = new Date(apt.slotStartIso);
       return (
@@ -40,7 +49,6 @@ const DoctorAppointmentContent = () => {
       );
     });
 
-    //filter the past appointmnet
     const pastAppointments = appointments.filter((apt) => {
       const aptDate = new Date(apt.slotStartIso);
       return (
@@ -76,39 +84,39 @@ const DoctorAppointmentContent = () => {
   const canJoinCall = (appointment: any) => {
     const appointmentTime = new Date(appointment.slotStartIso);
     const now = new Date();
-    const diffMintues = (appointmentTime.getTime() - now.getTime()) / (1000 * 60);
+    const diffMintues =
+      (appointmentTime.getTime() - now.getTime()) / (1000 * 60);
 
     return (
       isToday(appointment.slotStartIso) &&
-      diffMintues <= 15 && //not earliar than 15 min before start
-      diffMintues >= -120 && //not later than 2 hours after start
+      diffMintues <= 15 &&
+      diffMintues >= -120 &&
       (appointment.status === "Scheduled" ||
         appointment.status === "In Progress")
     );
   };
 
-
-  const canMarkCancelled = (appointment:any) => {
+  const canMarkCancelled = (appointment: any) => {
     const appointmentTime = new Date(appointment.slotStartIso);
     const now = new Date();
 
-    return appointment.status === 'Scheduled' && now > appointmentTime;
-  }
+    return appointment.status === "Scheduled" && now > appointmentTime;
+  };
 
-  const handleMarkCancelled = async(appointmentId:string) => {
-    if(
+  const handleMarkCancelled = async (appointmentId: string) => {
+    if (
       confirm("Are you sure you want to mark this appointment as cancelled")
-    ){
+    ) {
       try {
-         await updateAppointmentStatus(appointmentId,'Cancelled')
-         if(user?.type === 'doctor') {
-          fetchAppointments('doctor', activeTab);
-         }
+        await updateAppointmentStatus(appointmentId, "Cancelled");
+        if (user?.type === "doctor") {
+          fetchAppointments("doctor", activeTab);
+        }
       } catch (error) {
-         console.error('Failed to mark cancel appointment',error)
+        console.error("Failed to mark cancel appointment", error);
       }
     }
-  }
+  };
 
   if (!user) {
     return null;
@@ -137,10 +145,10 @@ const DoctorAppointmentContent = () => {
                   {appointment.patientId?.name}
                 </h3>
                 <p className="text-gray-600">
-                 Age : {appointment.patientId?.age}
+                  Age : {appointment.patientId?.age}
                 </p>
-                       <p className="text-sm text-gray-600">
-                 {appointment.patientId?.email}
+                <p className="text-sm text-gray-600">
+                  {appointment.patientId?.email}
                 </p>
               </div>
 
@@ -191,62 +199,58 @@ const DoctorAppointmentContent = () => {
             </div>
 
             <div className="mt-6 flex flex-col md:flex-row items-center md:justify-between space-y-3 md:space-y-0">
+              <div className="flex space-x-2">
+                {canJoinCall(appointment) && (
+                  <Link href={`/call/${appointment._id}`}>
+                    <Button
+                      size="sm"
+                      className="bg-green-600 hover:bg-green-700"
+                    >
+                      <Video className="w-4 h-4 mr-2" />
+                      Start Consultation
+                    </Button>
+                  </Link>
+                )}
 
-            <div className="flex space-x-2">
-              {canJoinCall(appointment) && (
-                <Link href={`/call/${appointment._id}`}>
-                <Button
-                 size='sm'
-                 className="bg-green-600 hover:bg-green-700"
-                >
-                  <Video className="w-4 h-4 mr-2"/>
-                  Start Consultation
-                  </Button></Link>
-              )}
-
-           <div>
-            {canMarkCancelled(appointment) && (
-              <Button
-               variant='outline'
-               size='sm'
-               className="text-red-600 hover:text-red-700 hover:bg-red-50"
-               onClick={() => handleMarkCancelled(appointment._id)}
-              >
-                <XCircle className="w-4 h-4 mr-2"/>
-                Mark Cancelled
-              </Button>
-            )}
-           </div>
-                  {appointment.status === 'Completed' && appointment.prescription && (
+                <div>
+                  {canMarkCancelled(appointment) && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      onClick={() => handleMarkCancelled(appointment._id)}
+                    >
+                      <XCircle className="w-4 h-4 mr-2" />
+                      Mark Cancelled
+                    </Button>
+                  )}
+                </div>
+                {appointment.status === "Completed" &&
+                  appointment.prescription && (
                     <PrescriptionViewModal
-                     appointment={appointment}
-                     userType="doctor"
-                     trigger={
-                      <Button
-                       variant='outline'
-                       size='sm'
-                       className="text-green-700 border-green-200 hover:bg-green-50"
-                      >
-                        <Stethoscope className="w-4 h-4 mr-2"/>
-                        View Report
-                      </Button>
-                     }
+                      appointment={appointment}
+                      userType="doctor"
+                      trigger={
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-green-700 border-green-200 hover:bg-green-50"
+                        >
+                          <Stethoscope className="w-4 h-4 mr-2" />
+                          View Report
+                        </Button>
+                      }
                     />
                   )}
+              </div>
 
-
-
-            </div>
-
-            {appointment.status === 'Completed' && (
-              <div className="flex items-center space-x-1">
-                {[...Array(5)].map((_,i) => (
-                  <Star
-                   className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
+              {appointment.status === "Completed" && (
+                <div className="flex items-center space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
                 </div>
-            )}
+              )}
             </div>
           </div>
         </div>
@@ -255,8 +259,6 @@ const DoctorAppointmentContent = () => {
   );
 
   const EmptyState = ({ tab }: { tab: string }) => {
-
-
     const state = emptyStates[tab as keyof typeof emptyStates];
     const Icon = state.icon;
     return (
@@ -292,7 +294,7 @@ const DoctorAppointmentContent = () => {
               <Link href="/dcotor/profile">
                 <Button>
                   <Calendar className="w-4 h-4 mr-2 " />
-                   Update Availability
+                  Update Availability
                 </Button>
               </Link>
             </div>
