@@ -61,7 +61,7 @@ const DoctorDashboardContent = () => {
 
   const handleSavePrescription = async (
     prescription: string,
-    notes: string
+    notes: string,
   ) => {
     if (!completingAppointmentId) return;
     setModalLoading(true);
@@ -107,8 +107,8 @@ const DoctorDashboardContent = () => {
       (appointmentTime.getTime() - now.getTime()) / (1000 * 60);
 
     return (
-      diffMintues <= 15 && //not earliar than 15 min before start
-      diffMintues >= -120 && //not later than 2 hours after start
+      diffMintues <= 15 && 
+      diffMintues >= -120 && 
       (appointment.status === "Scheduled" ||
         appointment.status === "In Progress")
     );
@@ -349,7 +349,7 @@ const DoctorDashboardContent = () => {
                           )}
                         </div>
                       </div>
-                    )
+                    ),
                   )
                 ) : (
                   <div className="text-center py-12">
@@ -413,7 +413,7 @@ const DoctorDashboardContent = () => {
                             </div>
                           </div>
                         </div>
-                      )
+                      ),
                     )
                   ) : (
                     <div className="text-center py-12">
@@ -454,10 +454,8 @@ const DoctorDashboardContent = () => {
                       {dashboardData?.performance?.completionRate}
                     </span>
                   </div>
-                                <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">
-                      Response Time
-                    </span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">Response Time</span>
                     <span className="font-semibold text-blue-600">
                       {dashboardData?.performance?.responseTime}
                     </span>
