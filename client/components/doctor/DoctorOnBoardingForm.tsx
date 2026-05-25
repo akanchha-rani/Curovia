@@ -57,7 +57,7 @@ const DoctorOnboardingForm = () => {
   };
 
   const handleInputChnage = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void => {
     const { name, value } = event.target;
     setFormData((prev: DoctorFormData) => ({
@@ -68,7 +68,7 @@ const DoctorOnboardingForm = () => {
 
   const handleHospitalInfoChnage = (
     field: keyof HospitalInfo,
-    value: string
+    value: string,
   ): void => {
     setFormData((prev) => ({
       ...prev,
@@ -379,7 +379,7 @@ const DoctorOnboardingForm = () => {
                       <Checkbox
                         id={`day-${value}`}
                         checked={formData.availabilityRange.excludedWeekdays.includes(
-                          value
+                          value,
                         )}
                         onCheckedChange={(checked) => {
                           if (checked) {
@@ -400,7 +400,7 @@ const DoctorOnboardingForm = () => {
                                 ...prev.availabilityRange,
                                 excludedWeekdays:
                                   prev.availabilityRange.excludedWeekdays.filter(
-                                    (d) => d !== value
+                                    (d) => d !== value,
                                   ),
                               },
                             }));
@@ -473,7 +473,7 @@ const DoctorOnboardingForm = () => {
                         size="sm"
                         onClick={() => {
                           const newRange = formData.dailyTimeRanges.filter(
-                            (_, i) => i !== index
+                            (_, i) => i !== index,
                           );
                           setFormData((prev) => ({
                             ...prev,
