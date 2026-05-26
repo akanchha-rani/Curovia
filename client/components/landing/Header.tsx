@@ -178,7 +178,7 @@ const Header: React.FC<HeaderProps> = ({ showDashboardNav = false }) => {
                     Settings
                   </Link>
                 </DropdownMenuItem>
-                       <DropdownMenuSeparator />
+                <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleLogout}
                   className="text-red-600"
