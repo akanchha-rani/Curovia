@@ -59,7 +59,7 @@ const PatientOnboardingForm = () => {
   const router = useRouter();
 
   const handleInputChnage = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -71,7 +71,7 @@ const PatientOnboardingForm = () => {
 
   const handleEmergencyContactChnage = (
     field: keyof EmerfencyContact,
-    value: string
+    value: string,
   ): void => {
     setFormData((prev) => ({
       ...prev,
@@ -84,7 +84,7 @@ const PatientOnboardingForm = () => {
 
   const handleMedicalHistoryChnage = (
     field: keyof MedicalHistory,
-    value: string
+    value: string,
   ): void => {
     setFormData((prev) => ({
       ...prev,
@@ -132,7 +132,6 @@ const PatientOnboardingForm = () => {
         </p>
       </div>
 
-      {/* Progress step */}
       <div className="flex items-center justify-center mb-8">
         <div className="flex items-center">
           {[1, 2, 3].map((step) => (
@@ -249,38 +248,38 @@ const PatientOnboardingForm = () => {
               </div>
               <Alert>
                 <AlertDescription>
-                    This information will be used to contact someone on your behalf in case of emergency during consultations.
+                  This information will be used to contact someone on your
+                  behalf in case of emergency during consultations.
                 </AlertDescription>
               </Alert>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="emergencyName">Contact Name</Label>
-                   <Input
+                  <Label htmlFor="emergencyName">Contact Name</Label>
+                  <Input
                     id="emergencyName"
                     value={formData.emergencyContact.name}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => 
-                        handleEmergencyContactChnage('name',e.target.value)
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleEmergencyContactChnage("name", e.target.value)
                     }
                     placeholder="Full name"
                     required
-                   />
+                  />
                 </div>
 
-
-                    <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="emergencyPhone">Contact Phone</Label>
-                   <Input
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="emergencyPhone">Contact Phone</Label>
+                  <Input
                     id="emergencyPhone"
                     value={formData.emergencyContact.phone}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => 
-                        handleEmergencyContactChnage('phone',e.target.value)
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleEmergencyContactChnage("phone", e.target.value)
                     }
                     placeholder="+91 9919326233"
                     required
-                   />
+                  />
                 </div>
 
-                  <div className="space-y-2">
+                <div className="space-y-2">
                   <Label htmlFor="relationship">Relationship</Label>
                   <Select
                     value={formData.emergencyContact.relationship}
@@ -303,13 +302,11 @@ const PatientOnboardingForm = () => {
                     </SelectContent>
                   </Select>
                 </div>
-
               </div>
             </div>
           )}
 
-
-           {currentStep === 3 && (
+          {currentStep === 3 && (
             <div className="space-y-6">
               <div className="flex items-center space-x-2 mb-6">
                 <Phone className="w-5 h-5 text-blue-600" />
@@ -317,53 +314,58 @@ const PatientOnboardingForm = () => {
               </div>
               <Alert>
                 <AlertDescription>
-                    This information helps doctors provide better care. All information is kept confidential and secure
+                  This information helps doctors provide better care. All
+                  information is kept confidential and secure
                 </AlertDescription>
               </Alert>
-                <div className="space-y-6">
-                    <div className="space-y-2">
-                        <Label htmlFor="allergies">Known Allergies</Label>
-                   <Textarea
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="allergies">Known Allergies</Label>
+                  <Textarea
                     id="allergies"
                     value={formData.medicalHistory.allergies}
-                    onChange={(e:ChangeEvent<HTMLTextAreaElement>) => 
-                        handleMedicalHistoryChnage("allergies",e.target.value)
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                      handleMedicalHistoryChnage("allergies", e.target.value)
                     }
-                    placeholder="e.g., Penicillin, Peanuts, Dust (or write 'None' if no known allergies" 
+                    placeholder="e.g., Penicillin, Peanuts, Dust (or write 'None' if no known allergies"
                     rows={3}
-                   />
-                    </div>
+                  />
+                </div>
 
-
-                                        <div className="space-y-2">
-                        <Label htmlFor="currentMedications">Current Medications</Label>
-                   <Textarea
+                <div className="space-y-2">
+                  <Label htmlFor="currentMedications">
+                    Current Medications
+                  </Label>
+                  <Textarea
                     id="currentMedications"
                     value={formData.medicalHistory.currentMedications}
-                    onChange={(e:ChangeEvent<HTMLTextAreaElement>) => 
-                        handleMedicalHistoryChnage("currentMedications",e.target.value)
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                      handleMedicalHistoryChnage(
+                        "currentMedications",
+                        e.target.value,
+                      )
                     }
-                    placeholder="List any medications you're currently taking (or write 'None' if not taking any)" 
+                    placeholder="List any medications you're currently taking (or write 'None' if not taking any)"
                     rows={3}
-                   />
-                    </div>
+                  />
+                </div>
 
-
-           <div className="space-y-2">
-                        <Label htmlFor="chronicConditions">Known Allergies</Label>
-                   <Textarea
+                <div className="space-y-2">
+                  <Label htmlFor="chronicConditions">Known Allergies</Label>
+                  <Textarea
                     id="chronicConditions"
                     value={formData.medicalHistory.chronicConditions}
-                    onChange={(e:ChangeEvent<HTMLTextAreaElement>) => 
-                        handleMedicalHistoryChnage("chronicConditions",e.target.value)
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                      handleMedicalHistoryChnage(
+                        "chronicConditions",
+                        e.target.value,
+                      )
                     }
-                    placeholder="e.g., Diabetes, Hypertension, Asthma (or write 'None' if no chronic conditions)" 
+                    placeholder="e.g., Diabetes, Hypertension, Asthma (or write 'None' if no chronic conditions)"
                     rows={3}
-                   />
-                    </div>
-
-
+                  />
                 </div>
+              </div>
             </div>
           )}
 
@@ -393,15 +395,17 @@ const PatientOnboardingForm = () => {
                       !formData.medicalHistory.chronicConditions ||
                       !formData.medicalHistory.currentMedications))
                 }
-              >Next</Button>
+              >
+                Next
+              </Button>
             ) : (
               <Button
-               type="button"
-               onClick={handleSubmit}
-               disabled={loading}
-               className="bg-green-600 hover:bg-green-700"
+                type="button"
+                onClick={handleSubmit}
+                disabled={loading}
+                className="bg-green-600 hover:bg-green-700"
               >
-                {loading ? "Completing Setup...": "Complete Profile"}
+                {loading ? "Completing Setup..." : "Complete Profile"}
               </Button>
             )}
           </div>
