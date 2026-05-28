@@ -140,12 +140,12 @@ const ProfilePage = ({ userType }: ProfileProps) => {
     field: string,
     index: number,
     subField: string,
-    value: any
+    value: any,
   ) => {
     setFormData((prev: any) => ({
       ...prev,
       [field]: prev[field].map((item: any, i: number) =>
-        i === index ? { ...item, [subField]: value } : item
+        i === index ? { ...item, [subField]: value } : item,
       ),
     }));
   };
@@ -159,7 +159,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
   const handleCategoryDelete = (indexToDelete: number) => {
     const currentCategories = [...formData.category];
     const newCategories = currentCategories.filter(
-      (_: any, i: number) => i !== indexToDelete
+      (_: any, i: number) => i !== indexToDelete,
     );
     setFormData((prev: any) => ({
       ...prev,
@@ -169,7 +169,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
 
   const getAvailableCategories = () => {
     return healthcareCategories.filter(
-      (cat) => !formData.category.includes(cat.title)
+      (cat) => !formData.category.includes(cat.title),
     );
   };
 
@@ -187,7 +187,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
     setFormData((prev: any) => ({
       ...prev,
       dailyTimeRanges: prev.dailyTimeRanges.filter(
-        (_: any, i: number) => i !== index
+        (_: any, i: number) => i !== index,
       ),
     }));
   };
@@ -266,7 +266,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
                   "dob",
                   e.target.value
                     ? new Date(formData.dob).toISOString().split("T")[0]
-                    : ""
+                    : "",
                 )
               }
               disabled={!isEditing}
@@ -315,7 +315,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
                     <SelectItem key={group} value={group}>
                       {group}
                     </SelectItem>
-                  )
+                  ),
                 )}
               </SelectContent>
             </Select>
@@ -389,7 +389,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
             <Select
               onValueChange={(value) => {
                 const selectedCategory = getAvailableCategories().find(
-                  (cate) => cate.id === value
+                  (cate) => cate.id === value,
                 );
                 if (selectedCategory) {
                   handleCategorySelect(selectedCategory);
@@ -538,7 +538,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
               <Checkbox
                 checked={
                   formData.availabilityRange?.excludedWeekdays?.includes(
-                    index
+                    index,
                   ) || false
                 }
                 onCheckedChange={() => handleWeekdayToggle(index)}
@@ -563,7 +563,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
                     "dailyTimeRanges",
                     index,
                     "start",
-                    e.target.value
+                    e.target.value,
                   )
                 }
                 disabled={!isEditing}
@@ -577,7 +577,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
                     "dailyTimeRanges",
                     index,
                     "end",
-                    e.target.value
+                    e.target.value,
                   )
                 }
                 disabled={!isEditing}
@@ -669,7 +669,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
           onChange={(e) =>
             handleInputChnage(
               "medicalHistory.currentMedications",
-              e.target.value
+              e.target.value,
             )
           }
           disabled={!isEditing}
@@ -684,7 +684,7 @@ const ProfilePage = ({ userType }: ProfileProps) => {
           onChange={(e) =>
             handleInputChnage(
               "medicalHistory.chronicConditions",
-              e.target.value
+              e.target.value,
             )
           }
           disabled={!isEditing}
