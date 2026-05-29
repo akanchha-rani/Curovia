@@ -49,34 +49,65 @@ Curovia is built using modern web technologies with a clear separation between f
 - GitHub
 - Postman
 
-## 🏗️ Architecture
+### 🔄 Application Flow
 
-┌──────────────┐
+ User
+ 
+  │
+  
+  ▼
 
-│   Frontend   │
+React Frontend (Client)
 
-│   React App  │
+  │
+  
+  │  HTTP Requests (GET, POST, PUT, DELETE)
+  
+  ▼
 
-└──────┬───────┘
-       │
-       │ HTTP Requests
-       ▼
+Express.js REST API (Server)
 
-┌──────────────┐
+  │
+  
+  │  Business Logic & Validation
+  
+  ▼
 
-│  REST APIs   │
+MongoDB Database
 
-│ Node + Express│
+  │
+  
+  │  Query Results
+  
+  ▼
 
-└──────┬───────┘
-       │
-       ▼
+Express.js REST API
+ 
+  │
+  
+  │  JSON Response
+  
+  ▼
 
-┌──────────────┐
+React Frontend
 
-│   MongoDB    │
+  │
+  
+  ▼
 
-└──────────────┘
+Updated User Interface
+
+### ⚡ Workflow
+
+- The user interacts with the React frontend through the browser.
+- The frontend sends HTTP requests to the backend REST APIs.
+- The Express server receives and validates the incoming requests.
+- Business logic is executed on the server.
+- The server performs CRUD operations on MongoDB.
+- MongoDB returns the requested data to the server.
+- The backend sends a structured JSON response to the frontend.
+- The frontend processes the response and updates the UI dynamically.
+- The user sees the updated information without reloading the page.
 
 ## 📁 Project Structure
 
